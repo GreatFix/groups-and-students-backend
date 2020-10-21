@@ -88,7 +88,7 @@ app.put("/students/:id", async(req,res) =>{
         const {firstName,lastName,groupId} = req.body
         if(await Student.findByPk(id)) {
             if(firstName && lastName && groupId){
-                if(!await Group.findByPk(groupId)) res.status(404).send("Group nod found") 
+                if(!await Group.findByPk(groupId)) res.status(404).send("Group not found") 
                 await Student.update(
                     { 
                     firstName: firstName,
@@ -120,7 +120,7 @@ app.put("/students/:id", async(req,res) =>{
                         )
                     }
                     if(groupId){
-                        if(!await Group.findByPk(groupId)) res.status(404).send("Group nod found") 
+                        if(!await Group.findByPk(groupId)) res.status(404).send("Group not found") 
                         await Student.update(
                             { 
                             groupId: groupId
