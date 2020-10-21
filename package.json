@@ -1,0 +1,28 @@
+{
+  "name": "rest-orm-pg-laba-7",
+  "version": "1.0.0",
+  "description": "rest-api express secuelize",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "body-parser": "1.19.0",
+    "express": "4.17.1",
+    "pg": "8.4.1",
+    "pg-hstore": "2.3.3",
+    "sequelize": "6.3.5"
+  },
+  "devDependencies": {
+    "nodemon": "1.18.4"
+  },
+  "keywords": [
+      "express",
+      "sequelize",
+      "node js",
+      "rest-api",
+      "js"
+  ],
+  "author": "Michigishev Umalat",
+  "license": "ISC"
+}
