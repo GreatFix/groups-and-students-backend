@@ -85,15 +85,15 @@ app.post("/students", async (req, res) => {
 app.put("/students/:id", async(req,res) =>{
     try {
         const {id} = req.params
-        const {firstName,lastName,group} = req.body
-
+        const {firstName,lastName,groupId} = req.body
         if(await Student.findByPk(id)) {
-            if(firstName && lastName && group){
+            if(firstName && lastName && groupId){
+                if(!await Group.findByPk(groupId)) res.status(404).send("Group nod found") 
                 await Student.update(
                     { 
                     firstName: firstName,
                     lastName: lastName,
-                    group: group
+                    groupId: groupId
                     },  {
                         where: { id: id }
                         }
@@ -119,10 +119,11 @@ app.put("/students/:id", async(req,res) =>{
                                 }
                         )
                     }
-                    if(group){
+                    if(groupId){
+                        if(!await Group.findByPk(groupId)) res.status(404).send("Group nod found") 
                         await Student.update(
                             { 
-                            group: group
+                            groupId: groupId
                             },  {
                                 where: { id: id }
                                 }
