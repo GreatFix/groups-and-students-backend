@@ -13,11 +13,11 @@ const Group = GroupModel(sequelize, Sequelize)
 Group.hasMany(Student, { onDelete: "cascade" })
 
 sequelize.authenticate()
-    .then(() => console.log('Успешное соединение.'))
-    .catch(err => console.error('Ошибка соединения:', err)) 
+    .then(() => console.log('Successful connection.'))
+    .catch(err => console.error('Connection error:', err)) 
 
 sequelize.sync()
-    .then(() => console.log("Синхронизировано") )
-    .catch(err => console.error("Ошибка синхронизации:" + err))
+    .then(() => console.log("Synchronized") )
+    .catch(err => console.error("Synchronization error:" + err))
 
 module.exports = { Student, Group }
