@@ -1,0 +1,16 @@
+.hide{
+    display: none;
+}
+li {
+    list-style: none;
+}
+
+.group-color{
+    background-color: #289FA1;
+}
+.group-color-active{
+    background-color:#1F787A;
+}
+li label:hover{
+    background-color:#1F787A;
+}

@@ -3,6 +3,7 @@ const express = require("express")
 const bodyParser = require("body-parser")
 const { Student, Group } = require('./sequelize')
 const exphbs = require('express-handlebars')
+const path = require('path')
 
 const app = express()
 const hbs = exphbs.create({
@@ -10,23 +11,27 @@ const hbs = exphbs.create({
     extname: 'hbs'
 })
 
+
 app.engine('hbs', hbs.engine)
 app.set('view engine', 'hbs')
 app.set('views', 'views')
 
-
+app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.json())
 
 
 
 app.get("/", (req, res) => {
-    res.status(200).send("Launched")
+    res.render('index')
 })
 
 app.get("/groups", async (req, res) => {
     try {
         const groups = await Group.findAll({ include: Student })
-        res.send(groups)
+        res.render('groups',{
+            title: 'Groups',
+            groups: groups
+        })
     } catch (err){
         res.status(400).send(err)
     }
