@@ -18,6 +18,7 @@ app.set('views', 'views')
 
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }));
 
 
 
@@ -28,6 +29,7 @@ app.get("/", (req, res) => {
 app.get("/groups", async (req, res) => {
     try {
         const groups = await Group.findAll({ include: Student })
+        console.log(groups)
         res.render('groups',{
             title: 'Groups',
             groups: groups
@@ -51,7 +53,7 @@ app.post("/groups", async (req, res) => {
     try {
         const {name} = req.body
         const result = await Group.create({ name: name })
-        res.status(201).send(result)
+        res.redirect("/groups")
     } catch (err){
         res.status(400).send(err)
     }
@@ -61,7 +63,7 @@ app.delete("/groups/:id", async (req,res) => {
     try {
         const {id} = req.params
         const result = await Group.destroy({ where: { id: id }})
-        result ? res.sendStatus(200):res.sendStatus(404)
+        result ? res.sendStatus(200).redirect("/groups"):res.sendStatus(404)
     } catch (err){
         res.status(400).send(err)
     }
