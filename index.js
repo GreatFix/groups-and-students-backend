@@ -43,7 +43,7 @@ app.get("/groups/:id", async (req, res) => {
     try {
         const {id} = req.params
         const group = await Group.findByPk(id,{ include: Student })
-        group ? res.status(200).send(group):res.sendStatus(404)
+        group ? res.status(200).send.json(group):res.sendStatus(404)
     } catch (err){
         res.status(400).send(err)
     }
