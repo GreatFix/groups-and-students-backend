@@ -1,20 +1,21 @@
 {{#if groups}}
 <ul id="groups" class="m-0 p-0">
     {{#each groups}}
-        <li class="_{{dataValues.id}} m-1">
+        <li id="{{dataValues.id}}" class=" m-1">
             <div class="d-flex row justify-content-between">
-                <div class="col-11"> 
-                    <label class="_{{dataValues.id}} form-control text-center text-light p-1 m-0 group-color">
+                <div class="col-8"> 
+                    <label id="{{dataValues.id}}" class=" form-control text-center text-light p-1 m-0 group-color">
                         {{dataValues.name}}
                     </label>
                 </div>
-                <div class="col-1">
-                    <form action="/groups/{{dataValues.id}}" method="DELETE">
-                        <button type="submit"  class="_{{dataValues.id}} form-control btn-danger">-</button>
-                    </form>
+                <div class="col-sm-2">
+                    <button id="{{dataValues.id}}" type="button"  class=" form-control btn-danger buttonEdit">&#9998;</button>	
+                </div>
+                <div class="col-sm-2">
+                        <button id="{{dataValues.id}}" type="button"  class=" form-control btn-danger buttonDel">&#10006;</button>
                 </div>
             </div>
-            <table class="_{{dataValues.id}} table hide ">
+            <table id="{{dataValues.id}}" class="table hide">
                 <thead class="thead-light">
                     <tr>
                         <th>№</th>
@@ -36,21 +37,23 @@
         </li>
     {{/each}}
     <li class="m-1">
-        <button type="button" id="input-add" class="form-control btn-success">+</button>
+        <button type="button" class="form-control btn-success buttonAdd">&#10010;</button>
     </li>
     <script>
         $groups = document.querySelector( '#groups' )
         $groups.addEventListener("click", (event)=>{
                 if(event.target.nodeName==='LABEL') active(event)
-                else if(event.target.textContent==='+') add(event)
-                else if(event.target.textContent==='-') remove(event)
+                else if(event.target.classList.contains('buttonAdd')) add(event)
+                else if(event.target.classList.contains('buttonDel')) remove(event)
+                else if(event.target.classList.contains('buttonEdit')) remove(event)
                 else console.log(event.target)
             })
         function active(event){
                 let label = event.target
                 label.classList.toggle('group-color')
                 label.classList.toggle('group-color-active')
-                let table = document.querySelector( `table.${label.classList[0]}` )
+                let table = document.querySelector( `table[id='${label.id}']` )
+                console.log(table)
                 table.classList.toggle('hide')
         }
         function add(event){
@@ -61,29 +64,32 @@
             `
                 <form action="/groups" method="POST">
                     <div class="d-flex row justify-content-between">
-                        <div class="col-11">    
+                        <div class="col-10">    
                             <input class='form-control' type="text" name="name" placeholder="Введите название группы..">
                         </div>
-                        <div class="col-1">
-                            <button type="submit" class="form-control btn-success">&#10004;</button>
+                        <div class="col-2">
+                            <button type="submit" class="form-control btn-success buttonSubmit">&#10004;</button>
                         </div>
                     </div>
                 </form>
             `
             )
 
-            {{!-- let input = document.createElement('input')
-            input.classList.add('form-control')
-            input.type = 'text'
-            input.name = 'groupName'
-
-            li.appendChild(input) --}}
-
         }
         function remove(event){
-            {{!-- let button = event.target
-            let li = document.querySelector( `li.${button.classList[0]}` )
-            li.remove() --}}
+            let button = event.target
+            query(`/groups/${button.id}`, "DELETE")
+        }
+
+        function query(url, method, body=null){ 
+            const headers = {
+                'Content-Type': 'application/json'
+            }
+            
+            return fetch(url, {
+                method: method,
+                headers: headers 
+            }).then(window.location.reload() )
         }
 
     </script>

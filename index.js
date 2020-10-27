@@ -29,7 +29,6 @@ app.get("/", (req, res) => {
 app.get("/groups", async (req, res) => {
     try {
         const groups = await Group.findAll({ include: Student })
-        console.log(groups)
         res.render('groups',{
             title: 'Groups',
             groups: groups
