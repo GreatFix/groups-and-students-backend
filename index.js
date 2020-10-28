@@ -48,6 +48,28 @@ app.get("/groups/:id", async (req, res) => {
     }
 })
 
+app.put("/groups/:id", async(req,res) =>{
+    try {
+        const {id} = req.params
+        const {name} = req.body
+        console.log(req.body)
+            if(name){ 
+                await Group.update(
+                    { 
+                    name: name
+                    },  {
+                        where: { id: id }
+                        }
+                )
+                res.status(200).send("Updated!")
+            }else {
+                res.status(400).send("Invalid value")
+            }
+        } catch (err){
+            res.status(400).send(err)
+        }
+})
+
 app.post("/groups", async (req, res) => {
     try {
         const {name} = req.body

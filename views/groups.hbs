@@ -45,14 +45,35 @@
                 if(event.target.nodeName==='LABEL') active(event)
                 else if(event.target.classList.contains('buttonAdd')) add(event)
                 else if(event.target.classList.contains('buttonDel')) remove(event)
-                else if(event.target.classList.contains('buttonEdit')) remove(event)
+                else if(event.target.classList.contains('buttonEdit')) edit(event)
                 else console.log(event.target)
+                        const $Forms = document.querySelectorAll("form")
+            $Forms.forEach(form => {
+                form.addEventListener('submit', (event) => {
+                    event.preventDefault()
+                    const formData = new FormData(event.target)
+
+                    if(event.target.classList.contains('editForm')){
+                        query(`${document.location.pathname}/${formData.get("id")}`, "PUT", formData)
+                            .then((response) => console.log(response))
+                            .catch((err) => console.error(err))
+                    }
+                    else if(event.target.classList.contains('addForm')){
+                        query(`${document.location.pathname}`, "POST", formData)
+                            .then((response) => console.log(response))
+                            .catch((err) => console.error(err))
+                    }
+
+                })
             })
+            })
+
+
         function active(event){
                 let label = event.target
                 label.classList.toggle('group-color')
                 label.classList.toggle('group-color-active')
-                let table = document.querySelector( `table[id='${label.id}']` )
+                let table = document.querySelector( `table[id='${label.id}']`)
                 console.log(table)
                 table.classList.toggle('hide')
         }
@@ -62,10 +83,10 @@
 
             li.insertAdjacentHTML('afterbegin',
             `
-                <form action="/groups" method="POST">
+                <form class="addForm">
                     <div class="d-flex row justify-content-between">
                         <div class="col-10">    
-                            <input class='form-control' type="text" name="name" placeholder="Введите название группы..">
+                            <input class='form-control' type="text" name="name" placeholder="Enter the name of the group ..">
                         </div>
                         <div class="col-2">
                             <button type="submit" class="form-control btn-success buttonSubmit">&#10004;</button>
@@ -76,6 +97,31 @@
             )
 
         }
+        function edit(event){
+            let li = document.querySelector( `li[id='${event.target.id}']`)
+
+            while (li.firstChild) {
+                li.removeChild(li.firstChild);
+            }
+
+            li.insertAdjacentHTML('afterbegin',
+            `
+                <form class="editForm">
+                    <div class="d-flex row justify-content-between">
+                        <div class="col-10">    
+                            <input class='form-control' type="text" name="name" placeholder="Введите название группы..">
+                        </div>
+                            <input type="hidden" class='form-control' type="text" name="id" value="${li.id}" placeholder="Identifier">
+                        <div class="col-2">
+                            <button type="submit" class="form-control btn-success buttonSubmit">&#10004;</button>
+                        </div>
+                    </div>
+                </form>
+            `
+            )
+
+        }
+
         function remove(event){
             let button = event.target
             query(`/groups/${button.id}`, "DELETE")
@@ -88,8 +134,9 @@
             
             return fetch(url, {
                 method: method,
-                headers: headers 
-            }).then(window.location.reload() )
+                headers: headers,
+                body: JSON.stringify(body) 
+            }).then()
         }
 
     </script>
