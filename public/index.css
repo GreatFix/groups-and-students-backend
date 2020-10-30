@@ -7,10 +7,10 @@ li {
 }
 
 .color-passive{
-    background-color: #289FA1;
+    background-color: #289FA1 !important; 
 }
 .color-active{
-    background-color:#1F787A;
+    background-color:#1F787A !important; 
 }
 li label:hover{
     background-color:#1F787A;

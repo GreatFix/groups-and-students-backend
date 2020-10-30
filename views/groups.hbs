@@ -1,20 +1,23 @@
 <ul id="groups" class="m-0 p-0">
     {{#if groups}}
         {{#each groups}}
-            <li id="{{dataValues.id}}" class=" m-1">
-                <div class="d-flex row justify-content-between">
-                    <div class="col-8"> 
-                        <label id="{{dataValues.id}}" class="labelActive form-control text-center text-light p-1 m-0 color-passive">
-                            {{dataValues.name}}
-                        </label>
-                    </div>
-                    <div class="col-sm-2">
-                        <button id="{{dataValues.id}}" type="button"  class="buttonEdit form-control btn-danger ">&#9998;</button>	
-                    </div>
-                    <div class="col-sm-2">
-                            <button id="{{dataValues.id}}" type="button"  class="buttonDel form-control btn-danger ">&#10006;</button>
-                    </div>
-                </div>
+            <li class="m-1">
+                    <form id="{{dataValues.id}}" class="outputForm d-flex row justify-content-between">
+                        <input type="hidden" class='form-control' type="text" name="id" value="{{dataValues.id}}" placeholder="Identifier">
+                        <div class="col-8">
+                            <input id="{{dataValues.id}}" name="name" value="{{dataValues.name}}" class="inputActive form-control text-light text-center color-passive" disabled="disabled">            
+                            </input>
+                        </div>
+                        <div class="col-sm-2">
+                            <button id="{{dataValues.id}}" type="button"  class="buttonEdit form-control btn-danger">&#9998;</button>	
+                        </div>
+                        <div class="col-2 hide">
+                            <button type="submit" class="buttonSave form-control btn-success">&#10004;</button>
+                        </div>
+                        <div class="col-sm-2">
+                            <button id="{{dataValues.id}}" type="submit"  class="buttonDel form-control btn-danger ">&#10006;</button>
+                        </div>
+                    </form>
                 <table id="{{dataValues.id}}" class="table hide">
                     <thead class="thead-light">
                         <tr>

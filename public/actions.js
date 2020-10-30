@@ -3,20 +3,19 @@ const pageID = document.querySelector("ul").id
 const $ul = document.querySelector( `#${pageID}` )
 $ul.addEventListener("click", (event)=>{
     switch(event.target.classList[0]){        
-        case 'labelActive': active(event);  break
+        case 'inputActive':   active(event);  break
         case 'buttonAdd':   add(event);     break
-        case 'buttonDel':   remove(event);  break
         case 'buttonEdit':  edit(event);    break
+        case 'buttonDel':  remove(event);    break
     }
 })
 
 function addListener(id){
-    const $form = document.querySelector(`#${id}`)
+    const $form = document.querySelector(`form[id='${id}']`)
         $form.addEventListener('submit', (event) => {
             event.preventDefault()
             let formData = new FormData(event.target)
             formData = Object.fromEntries(formData)
-
             if(event.target.classList.contains('editForm')){
                 query(`${document.location.pathname}/${formData.id}`, "PUT", formData)
                     .then((response) => console.log(response))
@@ -27,18 +26,49 @@ function addListener(id){
                     .then((response) => console.log(response))
                     .catch((err) => console.error(err))
             }
+            else if(event.target.classList.contains('outputForm')){
+                query(`${document.location.pathname}/${formData.id}`, "DELETE")
+                    .then((response) => console.log(response))
+                    .catch((err) => console.error(err))
+            }
 
         })
 }
 
 function active(event){
-        let label = event.target
-        label.classList.toggle('color-passive')
-        label.classList.toggle('color-active')
-
-        let table = document.querySelector( `table[id='${label.id}']`)
-        table.classList.toggle('hide')
+        let $input = event.target
+        $input.classList.toggle('color-passive')
+        $input.classList.toggle('color-active')
+        
+        const $form = document.querySelector(`form[id='${$input.id}']`)
+        if(!$form.classList.contains('editForm')){
+            let table = document.querySelector( `table[id='${$input.id}']`)
+            if(table)
+                table.classList.toggle('hide')
+        }
 }
+
+function edit(event){
+    let $form = document.querySelector( `form[id='${event.target.id}']`)
+
+    let save = $form.querySelector(`button.buttonEdit`)
+    save.parentNode.classList.toggle('hide')
+    let edit =$form.querySelector(`button.buttonSave`)
+    edit.parentNode.classList.toggle('hide')
+
+    inputs = $form.querySelectorAll( `input`)
+    inputs.forEach(input => input.disabled="")
+
+    $form.classList.add('editForm')
+    addListener(`${event.target.id}`)
+
+}
+
+function remove(event){
+    let button = event.target
+    button.id==="inputLi" ? window.location.reload() : addListener(`${button.id}`)
+}
+
 function add(event){
     let li = event.target.parentNode
     event.target.remove()
@@ -62,38 +92,6 @@ function add(event){
     )
     
     addListener(`addForm${event.target.id}`)
-
-}
-function edit(event){
-    let li = document.querySelector( `li[id='${event.target.id}']`)
-
-    while (li.firstChild) {
-        li.removeChild(li.firstChild);
-    }
-
-    li.insertAdjacentHTML('afterbegin',
-    `
-        <form id="editForm${event.target.id}" class="editForm">
-            <div class="d-flex row justify-content-between">
-                <div class="col-10">    
-                    <input class='form-control' type="text" name="name" placeholder="Введите название группы..">
-                </div>
-                    <input type="hidden" class='form-control' type="text" name="id" value="${li.id}" placeholder="Identifier">
-                <div class="col-2">
-                    <button type="submit" class="form-control btn-success buttonSubmit">&#10004;</button>
-                </div>
-            </div>
-        </form>
-    `
-    )
-
-    addListener(`editForm${event.target.id}`)
-
-}
-
-function remove(event){
-    let button = event.target
-    button.id==="inputLi" ? window.location.reload() : query(`${document.location.pathname}/${button.id}`, "DELETE")
 }
 
 function query(url, method, body){ 
