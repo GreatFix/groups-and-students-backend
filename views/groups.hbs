@@ -1,146 +1,43 @@
-{{#if groups}}
 <ul id="groups" class="m-0 p-0">
-    {{#each groups}}
-        <li id="{{dataValues.id}}" class=" m-1">
-            <div class="d-flex row justify-content-between">
-                <div class="col-8"> 
-                    <label id="{{dataValues.id}}" class=" form-control text-center text-light p-1 m-0 group-color">
-                        {{dataValues.name}}
-                    </label>
+    {{#if groups}}
+        {{#each groups}}
+            <li id="{{dataValues.id}}" class=" m-1">
+                <div class="d-flex row justify-content-between">
+                    <div class="col-8"> 
+                        <label id="{{dataValues.id}}" class="labelActive form-control text-center text-light p-1 m-0 color-passive">
+                            {{dataValues.name}}
+                        </label>
+                    </div>
+                    <div class="col-sm-2">
+                        <button id="{{dataValues.id}}" type="button"  class="buttonEdit form-control btn-danger ">&#9998;</button>	
+                    </div>
+                    <div class="col-sm-2">
+                            <button id="{{dataValues.id}}" type="button"  class="buttonDel form-control btn-danger ">&#10006;</button>
+                    </div>
                 </div>
-                <div class="col-sm-2">
-                    <button id="{{dataValues.id}}" type="button"  class=" form-control btn-danger buttonEdit">&#9998;</button>	
-                </div>
-                <div class="col-sm-2">
-                        <button id="{{dataValues.id}}" type="button"  class=" form-control btn-danger buttonDel">&#10006;</button>
-                </div>
-            </div>
-            <table id="{{dataValues.id}}" class="table hide">
-                <thead class="thead-light">
-                    <tr>
-                        <th>№</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#each dataValues.students}}
+                <table id="{{dataValues.id}}" class="table hide">
+                    <thead class="thead-light">
                         <tr>
-                            <th scope="row">{{dataValues.id}}</th>
-                            <td>{{dataValues.firstName}}</td>
-                            <td>{{dataValues.lastName}}</td>
+                            <th>№</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
                         </tr>
-                    {{/each}}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {{#each dataValues.students}}
+                            <tr>
+                                <th scope="row">{{dataValues.id}}</th>
+                                <td>{{dataValues.firstName}}</td>
+                                <td>{{dataValues.lastName}}</td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
 
-        </li>
-    {{/each}}
-    <li class="m-1">
-        <button type="button" class="form-control btn-success buttonAdd">&#10010;</button>
-    </li>
-    <script>
-        $groups = document.querySelector( '#groups' )
-        $groups.addEventListener("click", (event)=>{
-                if(event.target.nodeName==='LABEL') active(event)
-                else if(event.target.classList.contains('buttonAdd')) add(event)
-                else if(event.target.classList.contains('buttonDel')) remove(event)
-                else if(event.target.classList.contains('buttonEdit')) edit(event)
-                else console.log(event.target)
-                        const $Forms = document.querySelectorAll("form")
-            $Forms.forEach(form => {
-                form.addEventListener('submit', (event) => {
-                    event.preventDefault()
-                    const formData = new FormData(event.target)
-
-                    if(event.target.classList.contains('editForm')){
-                        query(`${document.location.pathname}/${formData.get("id")}`, "PUT", formData)
-                            .then((response) => console.log(response))
-                            .catch((err) => console.error(err))
-                    }
-                    else if(event.target.classList.contains('addForm')){
-                        query(`${document.location.pathname}`, "POST", formData)
-                            .then((response) => console.log(response))
-                            .catch((err) => console.error(err))
-                    }
-
-                })
-            })
-            })
-
-
-        function active(event){
-                let label = event.target
-                label.classList.toggle('group-color')
-                label.classList.toggle('group-color-active')
-                let table = document.querySelector( `table[id='${label.id}']`)
-                console.log(table)
-                table.classList.toggle('hide')
-        }
-        function add(event){
-            let li = event.target.parentNode
-            event.target.remove()
-
-            li.insertAdjacentHTML('afterbegin',
-            `
-                <form class="addForm">
-                    <div class="d-flex row justify-content-between">
-                        <div class="col-10">    
-                            <input class='form-control' type="text" name="name" placeholder="Enter the name of the group ..">
-                        </div>
-                        <div class="col-2">
-                            <button type="submit" class="form-control btn-success buttonSubmit">&#10004;</button>
-                        </div>
-                    </div>
-                </form>
-            `
-            )
-
-        }
-        function edit(event){
-            let li = document.querySelector( `li[id='${event.target.id}']`)
-
-            while (li.firstChild) {
-                li.removeChild(li.firstChild);
-            }
-
-            li.insertAdjacentHTML('afterbegin',
-            `
-                <form class="editForm">
-                    <div class="d-flex row justify-content-between">
-                        <div class="col-10">    
-                            <input class='form-control' type="text" name="name" placeholder="Введите название группы..">
-                        </div>
-                            <input type="hidden" class='form-control' type="text" name="id" value="${li.id}" placeholder="Identifier">
-                        <div class="col-2">
-                            <button type="submit" class="form-control btn-success buttonSubmit">&#10004;</button>
-                        </div>
-                    </div>
-                </form>
-            `
-            )
-
-        }
-
-        function remove(event){
-            let button = event.target
-            query(`/groups/${button.id}`, "DELETE")
-        }
-
-        function query(url, method, body=null){ 
-            const headers = {
-                'Content-Type': 'application/json'
-            }
-            
-            return fetch(url, {
-                method: method,
-                headers: headers,
-                body: JSON.stringify(body) 
-            }).then()
-        }
-
-    </script>
+            </li>
+        {{/each}}
+    {{/if}}
+    <li id="inputLi" class="m-1">
+        <button type="button" class="buttonAdd form-control btn-success ">&#10010;</button>
+    </li> 
 </ul>
-{{else }}
-<h3> Not founded </h3>
-{{/if}}

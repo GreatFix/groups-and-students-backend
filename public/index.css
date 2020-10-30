@@ -6,10 +6,10 @@ li {
     list-style: none;
 }
 
-.group-color{
+.color-passive{
     background-color: #289FA1;
 }
-.group-color-active{
+.color-active{
     background-color:#1F787A;
 }
 li label:hover{

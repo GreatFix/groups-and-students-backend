@@ -52,7 +52,6 @@ app.put("/groups/:id", async(req,res) =>{
     try {
         const {id} = req.params
         const {name} = req.body
-        console.log(req.body)
             if(name){ 
                 await Group.update(
                     { 
@@ -74,7 +73,7 @@ app.post("/groups", async (req, res) => {
     try {
         const {name} = req.body
         const result = await Group.create({ name: name })
-        res.redirect("/groups")
+        res.status(200).send("Added!")
     } catch (err){
         res.status(400).send(err)
     }
@@ -84,7 +83,7 @@ app.delete("/groups/:id", async (req,res) => {
     try {
         const {id} = req.params
         const result = await Group.destroy({ where: { id: id }})
-        result ? res.sendStatus(200).redirect("/groups"):res.sendStatus(404)
+        result ? res.sendStatus(200):res.sendStatus(404)
     } catch (err){
         res.status(400).send(err)
     }
