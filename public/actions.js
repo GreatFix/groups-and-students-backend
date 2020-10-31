@@ -3,10 +3,10 @@ const pageID = document.querySelector("ul").id
 const $ul = document.querySelector( `#${pageID}` )
 $ul.addEventListener("click", (event)=>{
     switch(event.target.classList[0]){        
-        case 'inputActive':   active(event);  break
+        case 'inputActive': active(event);  break
         case 'buttonAdd':   add(event);     break
         case 'buttonEdit':  edit(event);    break
-        case 'buttonDel':  remove(event);    break
+        case 'buttonDel':   remove(event);  break
     }
 })
 
@@ -40,11 +40,13 @@ function active(event){
         $input.classList.toggle('color-passive')
         $input.classList.toggle('color-active')
         
-        const $form = document.querySelector(`form[id='${$input.id}']`)
-        if(!$form.classList.contains('editForm')){
-            let table = document.querySelector( `table[id='${$input.id}']`)
-            if(table)
-                table.classList.toggle('hide')
+        if(pageID==='groups'){        
+            const $form = document.querySelector(`form[id='${$input.id}']`)
+            if(!$form.classList.contains('editForm')){
+                let table = document.querySelector( `table[id='${$input.id}']`)
+                if(table)
+                    table.classList.toggle('hide')
+            }
         }
 }
 
@@ -66,31 +68,59 @@ function edit(event){
 
 function remove(event){
     let button = event.target
-    button.id==="inputLi" ? window.location.reload() : addListener(`${button.id}`)
+    button.id==="cancel" ? window.location.reload() : addListener(`${button.id}`)
 }
 
 function add(event){
     let li = event.target.parentNode
     event.target.remove()
+    if(pageID==='groups'){        
+        li.insertAdjacentHTML('afterbegin',
+        `
+            <form id="addForm${event.target.id}" class="addForm">
+                <div class="d-flex row justify-content-between">
+                    <div class="col-8">    
+                        <input class='form-control' type="text" name="name" placeholder="Enter the name of the group ..">
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="submit" class="form-control btn-success buttonSubmit">&#10004;</button>
+                    </div>
+                    <div class="col-sm-2">
+                        <button id="cancel" type="button"  class="buttonDel form-control btn-danger ">&#10006;</button>
+                    </div>
+                </div>
+            </form>
+        `
+        )
+    }
+    else if(pageID==='students'){
+        li.insertAdjacentHTML('afterbegin',
+        `
+            <form id="addForm${event.target.id}" class="addForm d-flex row justify-content-between">
+                <div class="col-3">
+                    <input name="lastName" class="inputActive form-control text-light text-center color-passive">            
+                    </input>
+                </div>
+                <div class="col-3">
+                    <input name="firstName" class="inputActive form-control text-light text-center color-passive">            
+                    </input>
+                </div>
 
-    li.insertAdjacentHTML('afterbegin',
-    `
-        <form id="addForm${event.target.id}" class="addForm">
-            <div class="d-flex row justify-content-between">
-                <div class="col-8">    
-                    <input class='form-control' type="text" name="name" placeholder="Enter the name of the group ..">
+                <div class="col-2">
+                    <input name="groupId" class="inputActive form-control text-light text-center color-passive">            
+                    </input>
                 </div>
                 <div class="col-sm-2">
-                    <button type="submit" class="form-control btn-success buttonSubmit">&#10004;</button>
+                <button type="submit" class="form-control btn-success buttonSubmit">&#10004;</button>
                 </div>
                 <div class="col-sm-2">
-                    <button id="${li.id}" type="button"  class=" form-control btn-danger buttonDel">&#10006;</button>
+                    <button id="cancel" type="button"  class="buttonDel form-control btn-danger ">&#10006;</button>
                 </div>
-            </div>
-        </form>
-    `
-    )
-    
+            </form>
+        `
+        )
+    }
+        
     addListener(`addForm${event.target.id}`)
 }
 
@@ -103,5 +133,5 @@ function query(url, method, body){
         method: method,
         headers: headers,
         body: JSON.stringify(body) 
-    }).then(setTimeout(()=> window.location.reload(), 10))
+    }).then(setTimeout(()=> window.location.reload(),10))
 }

@@ -92,7 +92,10 @@ app.delete("/groups/:id", async (req,res) => {
 app.get("/students", async (req, res) => {
     try {
         const students = await Student.findAll()
-        res.send(students)
+        res.render('students',{
+            title: 'Students',
+            students: students
+        })
     } catch (err){
         res.status(400).send(err)
     }
@@ -113,8 +116,8 @@ app.post("/students", async (req, res) => {
         const {firstName, lastName, groupId} = req.body
         const group = await Group.findByPk(groupId)
         if (group){
-            await group.createStudent({firstName: firstName, lastName: lastName})
-            res.sendStatus(201)
+            const result = await group.createStudent({firstName: firstName, lastName: lastName})
+            res.status(200).send("Added!")
         }else
             res.sendStatus(404)
     } catch (err){
