@@ -2,9 +2,9 @@
   "name": "rest-orm-pg-laba-7",
   "version": "1.0.0",
   "description": "rest-api express secuelize",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node index.js"
   },
   "engines": {
     "node": "14.13.x",
