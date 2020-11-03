@@ -133,5 +133,5 @@ function query(url, method, body){
         method: method,
         headers: headers,
         body: JSON.stringify(body) 
-    }).then(setTimeout(()=> window.location.reload(),10))
+    }).then(setTimeout(()=> window.location.reload(),50))
 }
