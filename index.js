@@ -23,8 +23,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 app.get("/", (req, res) => {
-    console.log("every")
-    res.send("every body")
+    res.render('index')
 })
 
 app.get("/groups", async (req, res) => {
