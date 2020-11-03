@@ -4,7 +4,7 @@
   "description": "rest-api express secuelize",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "nodemon index.js"
   },
   "engines": {
     "node": "14.13.0",
@@ -16,10 +16,11 @@
     "express-handlebars": "^5.2.0",
     "pg": "8.4.1",
     "pg-hstore": "2.3.3",
-    "sequelize": "6.3.5"
+    "sequelize": "6.3.5",
+    "nodemon": "1.18.4"
   },
   "devDependencies": {
-    "nodemon": "1.18.4"
+
   },
   "keywords": [
     "express",
