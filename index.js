@@ -192,4 +192,7 @@ app.delete("/students/:id", async (req,res) => {
     }
 })
 
-app.listen(5000, () => console.log("Loading...interface"))
+let port = process.env.PORT || 5000
+app.listen(port, function() {
+  console.log("Listening on " + port)
+})
