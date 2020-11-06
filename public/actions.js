@@ -1,5 +1,6 @@
 const pageID = document.querySelector("ul").id
 
+
 const $ul = document.querySelector( `#${pageID}` )
 $ul.addEventListener("click", (event)=>{
     switch(event.target.classList[0]){        

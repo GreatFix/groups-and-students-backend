@@ -1,9 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
 @media (max-width: 600px) {
      input, button {
         font-size: 0.5em;   
     }
-
   }
+
+nav {
+    font-family: 'Oswald';
+}
+
+ul{
+    font-family: 'Source Sans Pro';
+}
 
 .button{
     border: 2em;
