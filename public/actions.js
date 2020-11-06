@@ -82,7 +82,7 @@ function add(event){
             <form id="addForm${event.target.id}" class="addForm">
                 <div class="d-flex row justify-content-between">
                     <div class="col-8">    
-                        <input class='input' type="text" name="name" placeholder="Enter the name of the group ..">
+                        <input class='inputActive input text-light color-passive' type="text" name="name" placeholder="Enter the name of the group ..">
                     </div>
                     <div class="col-2">
                         <button type="submit" class="button btn-success buttonSubmit">&#10004;</button>
