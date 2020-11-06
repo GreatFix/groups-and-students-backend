@@ -80,13 +80,13 @@ function add(event){
             <form id="addForm${event.target.id}" class="addForm">
                 <div class="d-flex row justify-content-between">
                     <div class="col-8">    
-                        <input class='form-control' type="text" name="name" placeholder="Enter the name of the group ..">
+                        <input class='input' type="text" name="name" placeholder="Enter the name of the group ..">
                     </div>
                     <div class="col-2">
-                        <button type="submit" class="form-control btn-success buttonSubmit">&#10004;</button>
+                        <button type="submit" class="button btn-success buttonSubmit">&#10004;</button>
                     </div>
                     <div class="col-2">
-                        <button id="cancel" type="button"  class="buttonDel form-control btn-danger ">&#10006;</button>
+                        <button id="cancel" type="button"  class="buttonDel button btn-danger ">&#10006;</button>
                     </div>
                 </div>
             </form>
@@ -98,23 +98,23 @@ function add(event){
         `
             <form id="addForm${event.target.id}" class="addForm d-flex row justify-content-between">
                 <div class="col-3">
-                    <input name="lastName" placeholder="Enter the lastname" class="inputActive form-control text-light text-center color-passive">            
+                    <input name="lastName" placeholder="lastname" class="inputActive input text-light color-passive">            
                     </input>
                 </div>
                 <div class="col-3">
-                    <input name="firstName" placeholder="Enter the firstname"  class="inputActive form-control text-light text-center color-passive">            
+                    <input name="firstName" placeholder="firstname"  class="inputActive input text-light color-passive">            
                     </input>
                 </div>
 
                 <div class="col-2">
-                    <input name="groupId" placeholder="Enter the groupId" class="inputActive form-control text-light text-center color-passive">            
+                    <input name="groupId" placeholder="group Id" class="inputActive input text-light color-passive">            
                     </input>
                 </div>
                 <div class="col-2">
-                <button type="submit" class="form-control btn-success buttonSubmit">&#10004;</button>
+                <button type="submit" class="button btn-success buttonSubmit">&#10004;</button>
                 </div>
                 <div class="col-2">
-                    <button id="cancel" type="button"  class="buttonDel form-control btn-danger ">&#10006;</button>
+                    <button id="cancel" type="button"  class="buttonDel button btn-danger ">&#10006;</button>
                 </div>
             </form>
         `
