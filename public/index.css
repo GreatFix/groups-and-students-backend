@@ -54,7 +54,7 @@ li label:hover{
 }
 
 .text-white{
-    color: #FFF
+    color: #FFF !important ;
 }
 /* button img{
     position: absolute;
