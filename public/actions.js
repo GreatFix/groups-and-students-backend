@@ -82,10 +82,10 @@ function add(event){
                     <div class="col-8">    
                         <input class='form-control' type="text" name="name" placeholder="Enter the name of the group ..">
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-2">
                         <button type="submit" class="form-control btn-success buttonSubmit">&#10004;</button>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-2">
                         <button id="cancel" type="button"  class="buttonDel form-control btn-danger ">&#10006;</button>
                     </div>
                 </div>
@@ -110,10 +110,10 @@ function add(event){
                     <input name="groupId" class="inputActive form-control text-light text-center color-passive">            
                     </input>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-2">
                 <button type="submit" class="form-control btn-success buttonSubmit">&#10004;</button>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-2">
                     <button id="cancel" type="button"  class="buttonDel form-control btn-danger ">&#10006;</button>
                 </div>
             </form>
