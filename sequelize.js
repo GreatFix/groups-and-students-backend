@@ -7,7 +7,7 @@ const sequelize = new Sequelize('dc6ktj1usj244s', 'qbdzvigiaicjpc', '98edc681c17
     port: '5432',
     dialect: 'postgres'
   })
-
+  
   
 const Student = StudentModel(sequelize, Sequelize)
 const Group = GroupModel(sequelize, Sequelize)
