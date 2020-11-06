@@ -82,7 +82,7 @@ function add(event){
             <form id="addForm${event.target.id}" class="addForm">
                 <div class="d-flex row justify-content-between">
                     <div class="col-8">    
-                        <input class='inputActive input text-light color-passive' type="text" name="name" placeholder="Enter the name of the group ..">
+                        <input class='inputActive input text-white color-passive' type="text" name="name" placeholder="Enter the name of the group ..">
                     </div>
                     <div class="col-2">
                         <button type="submit" class="button btn-success buttonSubmit">&#10004;</button>
@@ -100,16 +100,16 @@ function add(event){
         `
             <form id="addForm${event.target.id}" class="addForm d-flex row justify-content-between">
                 <div class="col-3">
-                    <input name="lastName" placeholder="lastname" class="inputActive input text-light color-passive">            
+                    <input name="lastName" placeholder="lastname" class="inputActive input text-white color-passive">            
                     </input>
                 </div>
                 <div class="col-3">
-                    <input name="firstName" placeholder="firstname"  class="inputActive input text-light color-passive">            
+                    <input name="firstName" placeholder="firstname"  class="inputActive input text-white color-passive">            
                     </input>
                 </div>
 
                 <div class="col-2">
-                    <input name="groupId" placeholder="group Id" class="inputActive input text-light color-passive">            
+                    <input name="groupId" placeholder="group Id" class="inputActive input text-white color-passive">            
                     </input>
                 </div>
                 <div class="col-2">

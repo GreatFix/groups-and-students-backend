@@ -53,6 +53,9 @@ li label:hover{
     font-size: 150%;
 }
 
+.text-white{
+    color: #FFF
+}
 /* button img{
     position: absolute;
     transform: translate(-50%, -50%);
