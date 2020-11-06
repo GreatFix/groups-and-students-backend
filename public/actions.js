@@ -1,5 +1,6 @@
 const pageID = document.querySelector("ul").id
-
+const navLink = document.querySelector(`#navbar-${pageID}`)
+navLink.classList.add('boost')
 
 const $ul = document.querySelector( `#${pageID}` )
 $ul.addEventListener("click", (event)=>{

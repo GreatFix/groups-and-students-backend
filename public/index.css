@@ -45,6 +45,10 @@ li label:hover{
     background-color:#1F787A;
 }
 
+.boost{
+    font-size: 150%;
+}
+
 /* button img{
     position: absolute;
     transform: translate(-50%, -50%);
