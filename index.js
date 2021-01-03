@@ -2,7 +2,7 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const { Student, Group } = require("./sequelize");
+const { Student, Group } = require("./src/sequelize");
 
 app.use(bodyParser.json());
 
