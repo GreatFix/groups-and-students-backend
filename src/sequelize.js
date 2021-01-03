@@ -3,11 +3,11 @@ const StudentModel = require("./models/student");
 const GroupModel = require("./models/group");
 
 const sequelize = new Sequelize(
-  "dc6ktj1usj244s",
-  "qbdzvigiaicjpc",
-  "98edc681c173576a8c40f5b0c508e3298a3f441f7ebcf9b9b4e749f9bd390305",
+  "d50et5f7tnlqrp",
+  "fziktuhkujcpct",
+  "a617f72aab6d0e9ae502c40196c46ca71368536090b1d32628744ee680277922",
   {
-    host: "ec2-54-75-199-252.eu-west-1.compute.amazonaws.com",
+    host: "ec2-54-170-123-247.eu-west-1.compute.amazonaws.com",
     port: "5432",
     dialect: "postgres",
   }
