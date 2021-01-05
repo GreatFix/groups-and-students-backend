@@ -72,10 +72,10 @@ app.get("/students/:id", async (req, res) => {
 
 app.post("/students", async (req, res) => {
   try {
-    const { firstName, lastName, groupId } = req.body;
-    const group = await Group.findByPk(groupId);
+    const { name, groupName } = req.body;
+    const group = await Group.findOne({ where: { groupName: groupName } });
     if (group) {
-      await group.createStudent({ firstName: firstName, lastName: lastName });
+      await group.createStudent({ name: name });
       res.sendStatus(201);
     } else res.sendStatus(404);
   } catch (err) {
@@ -86,16 +86,15 @@ app.post("/students", async (req, res) => {
 app.put("/students/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { firstName, lastName, groupId } = req.body;
+    const { name, groupName } = req.body;
     if (await Student.findByPk(id)) {
-      if (firstName && lastName && groupId) {
-        if (!(await Group.findByPk(groupId)))
+      if (name && groupName) {
+        if (!(await Group.findOne({ where: { groupName: groupName } })))
           res.status(404).send("Group not found");
         await Student.update(
           {
-            firstName: firstName,
-            lastName: lastName,
-            groupId: groupId,
+            name: name,
+            groupName: groupName,
           },
           {
             where: { id: id },
@@ -103,32 +102,22 @@ app.put("/students/:id", async (req, res) => {
         );
         res.status(200).send("Updated!");
       } else {
-        if (firstName) {
+        if (name) {
           await Student.update(
             {
-              firstName: firstName,
+              name: name,
             },
             {
               where: { id: id },
             }
           );
         }
-        if (lastName) {
-          await Student.update(
-            {
-              lastName: lastName,
-            },
-            {
-              where: { id: id },
-            }
-          );
-        }
-        if (groupId) {
-          if (!(await Group.findByPk(groupId)))
+        if (groupName) {
+          if (!(await Group.findOne({ where: { groupName: groupName } })))
             res.status(404).send("Group not found");
           await Student.update(
             {
-              groupId: groupId,
+              groupName: groupName,
             },
             {
               where: { id: id },
