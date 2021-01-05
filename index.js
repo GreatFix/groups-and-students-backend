@@ -153,9 +153,12 @@ app.put("/students/:id", async (req, res) => {
 app.delete("/students/:id", async (req, res) => {
   try {
     const { id } = req.params;
+    console.log("id " + id);
     const result = await Student.destroy({ where: { id: id } });
+    console.log("result " + result);
     result ? res.status(200).send(result) : res.sendStatus(404);
   } catch (err) {
+    console.log("err " + err);
     res.status(400).send(err);
   }
 });
