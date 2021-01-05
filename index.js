@@ -12,9 +12,18 @@ app.get("/", (req, res) => {
   res.status(200).send("Launched");
 });
 
-app.get("/groups", async (req, res) => {
+app.get("/groups/students", async (req, res) => {
   try {
     const groups = await Group.findAll({ include: Student });
+    res.send(groups);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
+app.get("/groups", async (req, res) => {
+  try {
+    const groups = await Group.findAll();
     res.send(groups);
   } catch (err) {
     res.status(400).send(err);
@@ -91,16 +100,18 @@ app.put("/students/:id", async (req, res) => {
       if (name && groupName) {
         if (!(await Group.findOne({ where: { name: groupName } })))
           res.status(404).send("Group not found");
-        await Student.update(
-          {
-            name: name,
-            groupName: groupName,
-          },
-          {
-            where: { id: id },
-          }
-        );
-        res.status(200).send("Updated!");
+        else {
+          await Student.update(
+            {
+              name: name,
+              groupName: groupName,
+            },
+            {
+              where: { id: id },
+            }
+          );
+          res.status(200).send("Updated!");
+        }
       } else {
         if (name) {
           await Student.update(
@@ -115,16 +126,18 @@ app.put("/students/:id", async (req, res) => {
         if (groupName) {
           if (!(await Group.findOne({ where: { name: groupName } })))
             res.status(404).send("Group not found");
-          await Student.update(
-            {
-              groupName: groupName,
-            },
-            {
-              where: { id: id },
-            }
-          );
+          else {
+            await Student.update(
+              {
+                groupName: groupName,
+              },
+              {
+                where: { id: id },
+              }
+            );
+          }
+          res.status(200).send("Updated!");
         }
-        res.status(200).send("Updated!");
       }
     } else {
       res.sendStatus(404);
