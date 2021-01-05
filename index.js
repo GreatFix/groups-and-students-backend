@@ -73,7 +73,7 @@ app.get("/students/:id", async (req, res) => {
 app.post("/students", async (req, res) => {
   try {
     const { name, groupName } = req.body;
-    const group = await Group.findOne({ where: { groupName: groupName } });
+    const group = await Group.findOne({ where: { name: groupName } });
     if (group) {
       await group.createStudent({ name: name });
       res.sendStatus(201);
@@ -89,7 +89,7 @@ app.put("/students/:id", async (req, res) => {
     const { name, groupName } = req.body;
     if (await Student.findByPk(id)) {
       if (name && groupName) {
-        if (!(await Group.findOne({ where: { groupName: groupName } })))
+        if (!(await Group.findOne({ where: { name: groupName } })))
           res.status(404).send("Group not found");
         await Student.update(
           {
@@ -113,7 +113,7 @@ app.put("/students/:id", async (req, res) => {
           );
         }
         if (groupName) {
-          if (!(await Group.findOne({ where: { groupName: groupName } })))
+          if (!(await Group.findOne({ where: { name: groupName } })))
             res.status(404).send("Group not found");
           await Student.update(
             {
