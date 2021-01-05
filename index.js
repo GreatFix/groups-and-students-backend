@@ -75,7 +75,7 @@ app.post("/students", async (req, res) => {
     const { name, groupName } = req.body;
     const group = await Group.findOne({ where: { name: groupName } });
     if (group) {
-      await group.createStudent({ name: name });
+      await group.createStudent({ name: name, groupName: groupName });
       res.sendStatus(201);
     } else res.sendStatus(404);
   } catch (err) {
