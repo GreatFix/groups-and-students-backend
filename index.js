@@ -44,7 +44,7 @@ app.post("/groups", async (req, res) => {
   try {
     const { name } = req.body;
     const result = await Group.create({ name: name });
-    res.status(201).send(result);
+    res.status(200).send(result);
   } catch (err) {
     res.status(400).send(err);
   }
@@ -54,7 +54,7 @@ app.delete("/groups/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const result = await Group.destroy({ where: { id: id } });
-    result ? res.sendStatus(200) : res.sendStatus(404);
+    result ? res.status(200).send(result) : res.sendStatus(404);
   } catch (err) {
     res.status(400).send(err);
   }
@@ -84,8 +84,11 @@ app.post("/students", async (req, res) => {
     const { name, groupName } = req.body;
     const group = await Group.findOne({ where: { name: groupName } });
     if (group) {
-      await group.createStudent({ name: name, groupName: groupName });
-      res.sendStatus(201);
+      const result = await group.createStudent({
+        name: name,
+        groupName: groupName,
+      });
+      res.status(200).send(result);
     } else res.sendStatus(404);
   } catch (err) {
     res.status(400).send(err);
@@ -96,12 +99,13 @@ app.put("/students/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { name, groupName } = req.body;
+    let result;
     if (await Student.findByPk(id)) {
       if (name && groupName) {
         if (!(await Group.findOne({ where: { name: groupName } })))
           res.status(404).send("Group not found");
         else {
-          await Student.update(
+          result = await Student.update(
             {
               name: name,
               groupName: groupName,
@@ -110,11 +114,11 @@ app.put("/students/:id", async (req, res) => {
               where: { id: id },
             }
           );
-          res.status(200).send("Updated!");
+          res.status(200).send(result);
         }
       } else {
         if (name) {
-          await Student.update(
+          result = await Student.update(
             {
               name: name,
             },
@@ -122,12 +126,11 @@ app.put("/students/:id", async (req, res) => {
               where: { id: id },
             }
           );
-        }
-        if (groupName) {
+        } else if (groupName) {
           if (!(await Group.findOne({ where: { name: groupName } })))
             res.status(404).send("Group not found");
           else {
-            await Student.update(
+            result = await Student.update(
               {
                 groupName: groupName,
               },
@@ -136,7 +139,7 @@ app.put("/students/:id", async (req, res) => {
               }
             );
           }
-          res.status(200).send("Updated!");
+          res.status(200).send(result);
         }
       }
     } else {
@@ -151,7 +154,7 @@ app.delete("/students/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const result = await Student.destroy({ where: { id: id } });
-    result ? res.sendStatus(200) : res.sendStatus(404);
+    result ? res.status(200).send(result) : res.sendStatus(404);
   } catch (err) {
     res.status(400).send(err);
   }
