@@ -3,8 +3,10 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const { Student, Group } = require("./src/sequelize");
+import cors from "cors";
 
 app.use(bodyParser.json());
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.status(200).send("Launched");
