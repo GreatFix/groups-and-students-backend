@@ -43,8 +43,39 @@ app.get("/groups/:id", async (req, res) => {
 app.post("/groups", async (req, res) => {
   try {
     const { name } = req.body;
-    const result = await Group.create({ name: name });
-    res.status(200).send(result);
+    if (name) {
+      const result = await Group.create({ name: name });
+      res.status(200).send(result);
+    } else {
+      res.status(400).send("Empty value");
+    }
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
+app.put("/students/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name } = req.body;
+
+    if (await Group.findByPk(id)) {
+      if (name) {
+        let result = await Group.update(
+          {
+            name,
+          },
+          {
+            where: { id: id },
+          }
+        );
+        res.status(200).send(result);
+      } else {
+        res.status(400).send("Empty value");
+      }
+    } else {
+      res.status(404).send("Group not found");
+    }
   } catch (err) {
     res.status(400).send(err);
   }
@@ -82,14 +113,18 @@ app.get("/students/:id", async (req, res) => {
 app.post("/students", async (req, res) => {
   try {
     const { name, groupName } = req.body;
-    const group = await Group.findOne({ where: { name: groupName } });
-    if (group) {
-      const result = await group.createStudent({
-        name: name,
-        groupName: groupName,
-      });
-      res.status(200).send(result);
-    } else res.sendStatus(404);
+    if (name && groupName) {
+      const group = await Group.findOne({ where: { name: groupName } });
+      if (group) {
+        const result = await group.createStudent({
+          name: name,
+          groupName: groupName,
+        });
+        res.status(200).send(result);
+      } else res.sendStatus(404);
+    } else {
+      res.status(400).send("Empty value");
+    }
   } catch (err) {
     res.status(400).send(err);
   }
